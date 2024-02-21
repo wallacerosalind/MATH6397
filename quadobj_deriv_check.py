@@ -28,7 +28,7 @@ def eval_objfun(Q, x, b, c, flag="d2f" ):
     # evaluate gradient
     #AT = A.transpose()
     #derivative(f) (row vector)
-    #gradient(f) (column vector)
+    #gradient(f) (column vector):
     df = 0.5 * np.matmul((QT + Q), x) + b #derived by hand
 
     if flag == "df":
@@ -43,11 +43,11 @@ def eval_objfun(Q, x, b, c, flag="d2f" ):
 # initialize class
 opt = Optimize()
 
-# ???????????define function handle????????
-fctn = lambda x, flag: eval_objfun( A, x, y, 0.1, flag )
+# define function handle https://docs.python.org/3/tutorial/controlflow.html
+fctn = lambda x, flag: eval_objfun(Q, x, b, c, flag)
 
 # set objective function
-opt.set_objfctn(fctn)
+opt.set_objfctn(fctn)  #fctn is f,df, or d2f depending on flag arg used above?
 
 # perform derivative check
 opt.deriv_check(x)
