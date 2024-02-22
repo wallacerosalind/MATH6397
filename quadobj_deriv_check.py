@@ -3,7 +3,7 @@ import sys
 sys.path.append("..")
 from LineSearchOpt import *
 
-n = 10 #dimension
+n = 100 #dimension
 Q = np.random.rand(n, n)
 x = np.random.rand(n)
 b = np.random.rand(n)
