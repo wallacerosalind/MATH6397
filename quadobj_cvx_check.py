@@ -4,7 +4,7 @@ import sys
 sys.path.append("../")
 from LineSearchOpt import *
 
-n = 10 #dimension (10 is placeholder. Test random positive integers?)
+n = 100 #dimension
 Q = np.random.rand(n, n) #https://numpy.org/doc/stable/reference/random/generated/numpy.random.rand.html
 x = np.random.rand(n)
 b = np.random.rand(n)
