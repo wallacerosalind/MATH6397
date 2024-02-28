@@ -25,16 +25,21 @@ def eval_objfun( A, L, x, b, beta, flag="d2f" ):
         return f
 
     # evaluate gradient
-    df =
+    df = np.matmul( np.matmul( AT, np.diag( np.cos( np.matmul(A, x)))), \
+                    np.sin(np.matmul(A, x)) - b)\
+                    + beta * np.matmul( LT, np.matmul(L, x))
 
     if flag == "df":
         return f,df
 
     #n = A.shape[0];
     # evaluate hessian
-    d2f =
+    d2f = np.matmul( AT, A) * ( 1 - 2 * np.matmul(np.sin(np.matmul(A, x)),\
+                                    np.sin(np.matmul(A, x)).transpose())\
+                                + np.matmul( bT, np.sin(np.matmul(A, x))))\
+            + beta * np.matmul( LT, L)
 
-    return f,df,d2f;
+    return f,df,d2f
 
 
 # initialize class
