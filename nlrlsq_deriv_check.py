@@ -41,7 +41,6 @@ def eval_objfun( A, L, x, b, beta, flag="d2f" ):
 
     return f,df,d2f
 
-
 # initialize class
 opt = Optimize();
 
