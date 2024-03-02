@@ -3,9 +3,12 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.append("../")
 from LineSearchOpt import *
+from Data import *
 
+spd = Data() #initiate Data class to use spd function for spd Q
 n = 100 #dimension
-Q = np.random.rand(n, n) #https://numpy.org/doc/stable/reference/random/generated/numpy.random.rand.html
+#Q = np.random.rand(n, n) #https://numpy.org/doc/stable/reference/random/generated/numpy.random.rand.html
+Q = spd.get_spd_mat( n )
 x = np.random.rand(n)
 b = np.random.rand(n)
 c = np.random.rand(1)
