@@ -23,8 +23,7 @@ def eval_objfun( X, Y, C, flag="d2f" ):
         return f
 
     # evaluate gradient
-    df = np.matmul( np.matmul( Y, 1 - np.square(sigma(np.matmul(Y, X)))), \
-                    sigma(np.matmul(Y, X)) - C)
+    df =
 
     if flag == "df":
         return f,df
