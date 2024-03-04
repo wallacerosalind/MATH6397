@@ -30,10 +30,7 @@ def eval_objfun( X, Y, C, flag="d2f" ):
 
     #n = A.shape[0];
     # evaluate hessian
-    d2f = np.matmul( np.matmul( np.matmul(Y, Y), -2* sigma(np.matmul(Y, X)) + 2* (sigma(np.matmul(Y, X)))**3), \
-                     sigma(np.matmul(Y, X)) - C)\
-            + np.square(np.matmul( Y, 1 - np.square(sigma(np.matmul(Y, X)))))
-
+    d2f =
     return f,df,d2f #returns tuple
 
 
