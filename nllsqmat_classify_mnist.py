@@ -4,10 +4,8 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.append("..")
 sys.path.append("../data")
-
 from LineSearchOpt import *
 from Data import *
-
 
 
 # evaluate objective function
@@ -28,6 +26,7 @@ def eval_objfun( X, Y, C, flag="d2f" ):
     # evaluate hessian
     d2f =
     return f,df,d2f #returns tuple
+
 
 
 n = 128; # problem dimension
