@@ -14,6 +14,21 @@ XT = X.transpose()
 YT = Y.transpose()
 sigma = np.tanh #activation function
 
+
+df_temp = np.zeros((n, p))
+val = 0 #declare and initiate variable
+tanval = 0 #declare and initiate variable to hold sum (sigma/tanh input)
+#construct df_temp by assigning df/dx(ij) to ith row, jth col
+for i in range(1,n):
+    for j in range(1,p):
+        for k in range(1,m):
+            for l in range(1,n):
+                    tanval +=  Y[k,l] * X[l,j]
+            val += Y[k,i] * (1-np.square(sigma(tanval))) * (sigma(tanval) - C[k,j]
+        df_temp[i,j] = val
+
+
+
 # evaluate objective function
 def eval_objfun( X, Y, C, flag="d2f" ):
     # evaluate objective function
@@ -30,9 +45,8 @@ def eval_objfun( X, Y, C, flag="d2f" ):
 
     #n = A.shape[0];
     # evaluate hessian
-    d2f =
-    return f,df,d2f #returns tuple
-
+    #d2f =
+    return f,df#,d2f #returns tuple
 
 # initialize class
 opt = Optimize();
