@@ -24,10 +24,10 @@ for i in range(1,n):
         for k in range(1,m):
             for l in range(1,n):
                     tanval +=  Y[k,l] * X[l,j]
-            val += Y[k,i] * (1-np.square(sigma(tanval))) * (sigma(tanval) - C[k,j]
+            val += Y[k,i] * (1-np.square(sigma(tanval))) * (sigma(tanval) - C[k,j])
         df_temp[i,j] = val
 
-
+df_temp.shape()
 
 # evaluate objective function
 def eval_objfun( X, Y, C, flag="d2f" ):
@@ -38,15 +38,15 @@ def eval_objfun( X, Y, C, flag="d2f" ):
         return f
 
     # evaluate gradient
-    df =
+    df = df_temp
 
     if flag == "df":
         return f,df
 
     #n = A.shape[0];
     # evaluate hessian
-    #d2f =
-    return f,df#,d2f #returns tuple
+    d2f = np.zeros((n, p))
+    return f,df,d2f #returns tuple
 
 # initialize class
 opt = Optimize();
