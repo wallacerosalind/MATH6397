@@ -46,6 +46,7 @@ def eval_objfun(Q, x, b, c, flag="d2f" ):
     return f,df,d2f
 
 
+
 #n = 512; # problem dimension (10 is placeholder. Test random positive integers?)
 #A = np.random.rand( n, n )
 xtrue = np.random.rand( n )

@@ -33,7 +33,6 @@ def eval_objfun( A, L, x, b, beta, flag="d2f" ):
     if flag == "df":
         return f,df
 
-    #n = A.shape[0];
     # evaluate hessian
     d2f = np.matmul( AT, A) * ( 1 - 2 * np.matmul(np.sin(np.matmul(A, x)),\
                                     np.sin(np.matmul(A, x)).transpose())\

@@ -13,7 +13,6 @@ QT = Q.transpose()
 xT = x.transpose()
 bT = b.transpose()
 
-############Code block below uses rlsq_deriv_check.py#########################
 # evaluate objective function
 def eval_objfun(Q, x, b, c, flag="d2f" ):
     # compute residual
