@@ -16,7 +16,6 @@ YT = Y.transpose()
 sigma = np.tanh #activation function
 
 
-
 df_temp = np.zeros((n, p))
 val = 0 #declare and initiate variable
 tanval = 0 #declare and initiate variable to hold sum (sigma/tanh input)
