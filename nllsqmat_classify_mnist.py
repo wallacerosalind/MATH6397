@@ -7,6 +7,7 @@ sys.path.append("../data")
 from LineSearchOpt import *
 from Data import *
 
+
 # evaluate objective function
 def eval_objfun( X, Y, C, flag="d2f" ):
     # evaluate objective function
