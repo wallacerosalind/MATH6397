@@ -29,7 +29,6 @@ for i in range(1,n):
         df_temp[i,j] = val
 
 
-
 # evaluate objective function
 def eval_objfun( X, Y, C, flag="df" ):
     # evaluate objective function

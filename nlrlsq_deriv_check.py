@@ -4,6 +4,7 @@ import sys
 sys.path.append("..")
 from LineSearchOpt import *
 
+
 n = 10 #col A
 m = 12 #rows A
 A = np.random.rand(m, n)
