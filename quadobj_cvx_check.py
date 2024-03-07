@@ -1,3 +1,4 @@
+#1b
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
@@ -7,8 +8,8 @@ from Data import *
 
 spd = Data() #initiate Data class to use spd function for spd Q
 n = 100 #dimension
-#Q = np.random.rand(n, n) #https://numpy.org/doc/stable/reference/random/generated/numpy.random.rand.html
-Q = spd.get_spd_mat( n )
+Q = np.random.rand(n, n)    #comment out one of the Qs
+#Q = spd.get_spd_mat( n )
 x = np.random.rand(n)
 b = np.random.rand(n)
 c = np.random.rand(1)
@@ -18,7 +19,6 @@ bT = b.transpose()
 
 
 # evaluate objective function
-#######function below copied from quadobj_deriv_check.py########
 def eval_objfun(Q, x, b, c, flag="d2f" ):
     # compute residual
     #r = np.matmul( A, x ) - y
@@ -44,8 +44,6 @@ def eval_objfun(Q, x, b, c, flag="d2f" ):
     d2f = 0.5 * (QT + Q) #derived by hand
 
     return f,df,d2f
-#######function above copied from quadobj_deriv_check.py########
-
 
 
 #n = 512; # problem dimension (10 is placeholder. Test random positive integers?)

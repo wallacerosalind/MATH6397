@@ -1,10 +1,11 @@
+#3a
 import numpy as np
 import sys
 sys.path.append("..")
 from LineSearchOpt import *
 
-n = 144 #features 784=28*28 (image size)
-m = 60 #examples 60,000
+n = 28 #features 784=28*28 (image size)
+m = 30 #examples 60,000
 p = 10 #classes (one for each integer 0-9)
 X = np.random.rand(n, p) #n,p not n,m?
 Y = np.random.rand(m, n)
@@ -27,10 +28,10 @@ for i in range(1,n):
             val += Y[k,i] * (1-np.square(sigma(tanval))) * (sigma(tanval) - C[k,j])
         df_temp[i,j] = val
 
-df_temp.shape()
+
 
 # evaluate objective function
-def eval_objfun( X, Y, C, flag="d2f" ):
+def eval_objfun( X, Y, C, flag="df" ):
     # evaluate objective function
     f = 0.5*np.square(np.linalg.norm( sigma(np.matmul(Y, X)) - C ))
 
@@ -38,14 +39,14 @@ def eval_objfun( X, Y, C, flag="d2f" ):
         return f
 
     # evaluate gradient
-    df = df_temp
+    df = df_temp.reshape(n*p)
 
     if flag == "df":
         return f,df
 
-    #n = A.shape[0];
+    #n = A.shape[0]; #shape[0] gives number of rows; shape[1] num cols
     # evaluate hessian
-    d2f = np.zeros((n, p))
+    d2f = np.identity(X.shape[0]*X.shape[1])
     return f,df,d2f #returns tuple
 
 # initialize class
@@ -57,5 +58,7 @@ fctn = lambda x, flag: eval_objfun( X, Y, C, flag )
 # set objective function
 opt.set_objfctn( fctn )
 
+Xvec = X.reshape(X.shape[0]*X.shape[1])
+#Xvec stacks elements of matrix X into a vector since deriv_check expects X to be a vec not a matrix
 # perform derivative check
-opt.deriv_check( X )
+opt.deriv_check( Xvec )

@@ -236,7 +236,8 @@ class Optimize:
         print( reps*"-" )
 
         h = np.logspace( 0, -10, 10 ); # step size
-        v = np.random.rand( x.shape[0] ); # random perturbation
+        v = np.random.rand( x.shape[0]); # random perturbation
+            #"*x.shape[1]"
 
         # evaluate objective function
         f, df, d2f = self._objfctn( x, "d2f" );
