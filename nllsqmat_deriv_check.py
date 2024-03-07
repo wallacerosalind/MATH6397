@@ -45,7 +45,7 @@ def eval_objfun( X, Y, C, flag="df" ):
 
     #n = A.shape[0]; #shape[0] gives number of rows; shape[1] num cols
     # evaluate hessian
-    d2f = np.identity(X.shape[0]*X.shape[1])
+    d2f = np.identity(X.shape[0]*X.shape[1]) #placeholder since not computing Hessian
     return f,df,d2f #returns tuple
 
 # initialize class

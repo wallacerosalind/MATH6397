@@ -7,9 +7,23 @@ sys.path.append("../data")
 from LineSearchOpt import *
 from Data import *
 
+#populate df_temp matrix
+df_temp = np.zeros((n, p))
+val = 0 #declare and initiate variable
+tanval = 0 #declare and initiate variable to hold sum (sigma/tanh input)
+#construct df_temp by assigning df/dx(ij) to ith row, jth col
+for i in range(1,n):
+    for j in range(1,p):
+        for k in range(1,m):
+            for l in range(1,n):
+                    tanval +=  Y[k,l] * X[l,j]
+            val += Y[k,i] * (1-np.square(sigma(tanval))) * (sigma(tanval) - C[k,j])
+        df_temp[i,j] = val
+
+
 
 # evaluate objective function
-def eval_objfun( X, Y, C, flag="d2f" ):
+def eval_objfun( X, Y, C, flag="df" ):
     # evaluate objective function
     f = 0.5*np.square(np.linalg.norm( sigma(np.matmul(Y, X)) - C ))
 
@@ -17,14 +31,14 @@ def eval_objfun( X, Y, C, flag="d2f" ):
         return f
 
     # evaluate gradient
-    df =
+    df = df_temp.reshape(n*p)
 
     if flag == "df":
         return f,df
 
     #n = A.shape[0];
     # evaluate hessian
-    d2f =
+    d2f = np.identity(X.shape[0]*X.shape[1]) #placeholder since not computing Hessian
     return f,df,d2f #returns tuple
 
 
@@ -49,7 +63,7 @@ x = np.zeros( n )
 
 # set parameters
 opt.set_objfctn( fctn )
-opt.set_maxiter( 100 )
+opt.set_maxiter( 1 ) #3b:run for 1 iter then report accuracy for each training and test datasets. Then set to 100 iters
 
 # execture solver (gsc)
 xgd = opt.run( x, "gdsc" )
