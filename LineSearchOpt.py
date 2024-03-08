@@ -157,7 +157,7 @@ class Optimize:
 
 
 
-    def run( self, x, flag="gdsc" ):
+    def run(self, x: object, flag: object = "gdsc") -> object:
         """
         _optimize run optimizer
         """
