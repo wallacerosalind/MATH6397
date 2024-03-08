@@ -20,18 +20,14 @@ bT = b.transpose()
 
 # evaluate objective function
 def eval_objfun(Q, x, b, c, flag="d2f" ):
-    # compute residual
-    #r = np.matmul( A, x ) - y
 
     # evaluate objective function
-    #f = 0.5*np.inner( r, r ) + alpha*0.5*np.inner( x, x )
     f = 0.5 * (np.matmul(np.matmul(xT, Q), x)) + np.matmul(bT, x) + c
 
     if flag == "f":
         return f
 
     # evaluate gradient
-    #AT = A.transpose()
     #derivative(f) (row vector)
     #gradient(f) (column vector):
     df = 0.5 * np.matmul((QT + Q), x) + b #derived by hand

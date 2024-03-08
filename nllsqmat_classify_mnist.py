@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.append("..")
 sys.path.append("../data")
-from LineSearchOpt import *
+from _3bLineSearchOpt import *
 from Data import *
 
 n = 784 #features 784=28*28 (image size)
@@ -36,24 +36,21 @@ def eval_objfun( X, Y, C, flag="df" ):
                     tanval += Y[k, l] * X[l, j]
                 val += Y[k, i] * (1 - np.square(sigma(tanval))) * (sigma(tanval) - C[k, j])
             df_temp[i, j] = val
-    df = df_temp.reshape(n*p)
+    df = df_temp.reshape(n*p) #df_temp is an nxp matrix. This line converts df_temp to n*p vector and assigns this vector to df
 
     if flag == "df":
         return f,df
 
-    #n = A.shape[0];
     # evaluate hessian
     d2f = np.identity(X.shape[0]*X.shape[1]) #placeholder since not computing Hessian
     return f,df,d2f #returns tuple
-
-
 
 # initialize classes
 opt = Optimize()
 dat = Data()
 Y,C,L = dat.read_mnist("test")
-print(Y.shape[0])
-print(Y.shape[1])
+print(Y.shape[0]) #view the row dimension of Y
+print(Y.shape[1]) #view the col dimension of Y
 Xtrue = np.random.rand(n, p)
 
 # define function handle
