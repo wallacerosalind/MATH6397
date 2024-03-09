@@ -17,6 +17,8 @@ sigma = np.tanh #activation function
 
 # evaluate objective function
 def eval_objfun( X, Y, C, flag="df" ):
+    #ensure that X is in matrix form (to allow matmul within f)
+    X = X.reshape(Y.shape[1] , C.shape[1], order = 'F')
     # evaluate objective function
     f = 0.5*np.square(np.linalg.norm( sigma(np.matmul(Y, X)) - C ))
 
