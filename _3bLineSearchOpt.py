@@ -71,11 +71,11 @@ class Optimize:
         fx, dfx = self._objfctn( x, "df" );
 
         ####Test converting x,fx,dfx from matrix to vectors:
-        x = x.reshape(x.shape[0] * x.shape[1])
+        #x = x.reshape(x.shape[0] * x.shape[1])
         print(x.shape)
         print(fx.shape)
-        fx = fx.reshape(fx.shape[0] * fx.shape[1])
-        dfx = dfx.reshape(dfx.shape[0] * dfx.shape[1])
+        #fx = fx.reshape(fx.shape[0] * fx.shape[1])
+        #dfx = dfx.reshape(dfx.shape[0] * dfx.shape[1])
 
 
         # initialize flag
@@ -165,7 +165,7 @@ class Optimize:
 
 
 
-    def run(self, x: object, flag: object = "gdsc") -> object:
+    def run(self, x, flag= "gdsc"):
         """
         _optimize run optimizer
         """

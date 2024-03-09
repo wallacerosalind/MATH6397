@@ -49,8 +49,8 @@ def eval_objfun( X, Y, C, flag="df" ):
 opt = Optimize()
 dat = Data()
 Y,C,L = dat.read_mnist("test")
-#print(Y.shape[0]) #view the row dimension of Y
-#print(Y.shape[1]) #view the col dimension of Y
+print(Y.shape[0]) #view the row dimension of Y
+print(Y.shape[1]) #view the col dimension of Y
 Xtrue = np.random.rand(n, p)
 
 # define function handle
@@ -64,7 +64,7 @@ opt.set_objfctn( fctn )
 opt.set_maxiter( 1 ) #3b:run for 1 iter then report accuracy for each training and test datasets. Then set to 100 iters
 
 # execture solver (gsc)
-xgd = opt.run( X, "gdsc" )
+xgd = opt.run( X.reshape(X.shape[0] * X.shape[1]), "gdsc" )
 
 # execture solver (newton)
 #xnt = opt.run( x, "newton" )
