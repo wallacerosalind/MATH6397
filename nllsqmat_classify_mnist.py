@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.append("..")
 sys.path.append("../data")
-from _3bLineSearchOpt import *
+from LineSearchOpt import *
 from Data import *
 
 n = 784 #features 784=28*28 (image size)
@@ -57,14 +57,14 @@ Xtrue = np.random.rand(n, p)
 fctn = lambda Xtrue, flag: eval_objfun( Xtrue, Y, C, "df" )
 
 # initial guess
-X = np.zeros((n,p))
+X = np.zeros(Y.shape[1]*C.shape[1])
 
 # set parameters
 opt.set_objfctn( fctn )
 opt.set_maxiter( 1 ) #3b:run for 1 iter then report accuracy for each training and test datasets. Then set to 100 iters
 
 # execture solver (gsc)
-xgd = opt.run( X.reshape(X.shape[0] * X.shape[1]), "gdsc" )
+xgd = opt.run( X, "gdsc" )
 
 # execture solver (newton)
 #xnt = opt.run( x, "newton" )
