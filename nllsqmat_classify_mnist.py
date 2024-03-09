@@ -49,6 +49,7 @@ def eval_objfun( X, Y, C, flag="df" ):
 opt = Optimize()
 dat = Data()
 Y,C,L = dat.read_mnist("test")
+print(Y.shape)
 Xtrue = np.random.rand(n, p)
 
 # define function handle
