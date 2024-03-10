@@ -89,8 +89,8 @@ class Optimize:
             #    print("{:e}".format(ftrial), "<", "{:e}".format(fx), "[ t =","{:e}".format(t),"]")
 
             # make sure that we have a descent direction
-            print(ftrial)
-            print(fx.shape)
+            #print(ftrial)#debug
+            #print(fx.shape)#debug
             if ( ftrial < fx + c*t*descent ):
                 success = 1
                 break

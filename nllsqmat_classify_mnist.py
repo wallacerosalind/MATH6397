@@ -51,7 +51,6 @@ def eval_objfun( X, Y, C, flag="df" ):
 opt = Optimize()
 dat = Data()
 Y,C,L = dat.read_mnist("test")
-#print(Y.shape)
 Xtrue = np.random.rand(n, p)
 
 # define function handle
@@ -66,12 +65,14 @@ X = np.zeros(Y.shape[1]*C.shape[1])
 xgd = opt.run( X, "gdsc" )
 
 # execture solver (newton)
-#xnt = opt.run( x, "newton" )
-
-
-z = np.linspace( 0, 1, n)
+xnt = opt.run( X, "newton" )
+#z = np.linspace( 0, 1, n)
+z = np.linspace( 0, 1, xgd.shape[0]) #.shape[] returns int; .shape returns tuple
+print(z.shape)#debug
+print(xgd.shape)#debug
 plt.plot( z, xgd, marker="1", linestyle='', markersize=12)
-#plt.plot( z, xnt, marker="2", linestyle='', markersize=12)
+plt.plot( z, xnt, marker="2", linestyle='', markersize=12)
+Xtrue = Xtrue.reshape(Xtrue.shape[0]*Xtrue.shape[1], order = 'F')
 plt.plot( z, Xtrue )
 plt.legend(['gradient descent', 'newton', r'$x^\star$'], fontsize="20")
 plt.show()
