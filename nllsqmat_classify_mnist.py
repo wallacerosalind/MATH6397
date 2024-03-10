@@ -8,7 +8,7 @@ from LineSearchOpt import *
 from Data import *
 
 n = 784 #features 784=28*28 (image size)
-m = 60 #examples 60,000
+m = 12 #examples 60,000
 p = 10 #classes (one for each integer 0-9)
 #X = np.random.rand(n, p)
 #Y = np.random.rand(m, n)
@@ -51,19 +51,17 @@ def eval_objfun( X, Y, C, flag="df" ):
 opt = Optimize()
 dat = Data()
 Y,C,L = dat.read_mnist("test")
-print(Y.shape)
+#print(Y.shape)
 Xtrue = np.random.rand(n, p)
 
 # define function handle
-fctn = lambda Xtrue, flag: eval_objfun( Xtrue, Y, C, "df" )
-
-# initial guess
-X = np.zeros(Y.shape[1]*C.shape[1])
-
+fctn = lambda Xtrue, flag: eval_objfun( Xtrue, Y, C, flag)
 # set parameters
 opt.set_objfctn( fctn )
 opt.set_maxiter( 1 ) #3b:run for 1 iter then report accuracy for each training and test datasets. Then set to 100 iters
 
+# initial guess
+X = np.zeros(Y.shape[1]*C.shape[1])
 # execture solver (gsc)
 xgd = opt.run( X, "gdsc" )
 
