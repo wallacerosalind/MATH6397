@@ -50,14 +50,16 @@ def eval_objfun( X, Y, C, flag="df" ):
 # initialize classes
 opt = Optimize()
 dat = Data()
-Y,C,L = dat.read_mnist("test")
+Y,C,L = dat.read_mnist("test") #comment out either test or train line
+#Y,C,L = dat.read_mnist("train")
 Xtrue = np.random.rand(n, p)
-
+X = np.zeros(Y.shape[1]*C.shape[1])#test
+fctn = lambda X, flag: eval_objfun( X, Y, C, flag)#test
 # define function handle
-fctn = lambda Xtrue, flag: eval_objfun( Xtrue, Y, C, flag)
+#fctn = lambda Xtrue, flag: eval_objfun( Xtrue, Y, C, flag)
 # set parameters
 opt.set_objfctn( fctn )
-opt.set_maxiter( 1 ) #3b:run for 1 iter then report accuracy for each training and test datasets. Then set to 100 iters
+opt.set_maxiter( 100 ) #3b:run for 1 iter then report accuracy for each training and test datasets. Then set to 100 iters
 
 # initial guess
 X = np.zeros(Y.shape[1]*C.shape[1])
@@ -68,11 +70,12 @@ xgd = opt.run( X, "gdsc" )
 xnt = opt.run( X, "newton" )
 #z = np.linspace( 0, 1, n)
 z = np.linspace( 0, 1, xgd.shape[0]) #.shape[] returns int; .shape returns tuple
-print(z.shape)#debug
-print(xgd.shape)#debug
+#print(z.shape)#debug
+#print(xgd.shape)#debug
 plt.plot( z, xgd, marker="1", linestyle='', markersize=12)
 plt.plot( z, xnt, marker="2", linestyle='', markersize=12)
-Xtrue = Xtrue.reshape(Xtrue.shape[0]*Xtrue.shape[1], order = 'F')
-plt.plot( z, Xtrue )
+#Xtrue = Xtrue.reshape(Xtrue.shape[0]*Xtrue.shape[1], order = 'F')
+#plt.plot( z, Xtrue )
+plt.plot( z, X )
 plt.legend(['gradient descent', 'newton', r'$x^\star$'], fontsize="20")
 plt.show()
