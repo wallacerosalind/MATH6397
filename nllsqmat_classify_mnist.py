@@ -50,7 +50,7 @@ def eval_objfun( X, Y, C, flag="df" ):
 # initialize classes
 opt = Optimize()
 dat = Data()
-Y,C,L = dat.read_mnist("test") #comment out either test or train line
+Y,C,L = dat.read_mnist("test")  #comment out either test or train line
 #Y,C,L = dat.read_mnist("train")
 Xtrue = np.random.rand(n, p)
 X = np.zeros(Y.shape[1]*C.shape[1])#test
