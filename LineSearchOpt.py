@@ -69,7 +69,10 @@ class Optimize:
 
         # evaluate objective function
         fx, dfx = self._objfctn( x, "df" );
-
+        print('fx = ')
+        print(fx)
+        print('dfx = ')
+        print(dfx)
         # initialize flag
         success = 0;
 
@@ -80,14 +83,21 @@ class Optimize:
         t = 1.0;
         c = 1e-4;
         descent = np.inner( dfx, s );
-
+        ###########debug:
+        #print(dfx)
+        #print(descent)
+        #print('(line84 LSO)  fx value is')
+        #print(fx)
+        #########
         for i in range(1,maxit):
             # evaluate objective function
             ftrial = self._objfctn( x + t*s, "f" )
-
+            ###########debug:
+            #print('(line91 LSO)  ftrial value is')
+            #print(ftrial)
+            #########
             #if self.debug:
             #    print("{:e}".format(ftrial), "<", "{:e}".format(fx), "[ t =","{:e}".format(t),"]")
-
             # make sure that we have a descent direction
             #print(ftrial)#debug
             #print(fx.shape)#debug
@@ -186,8 +196,13 @@ class Optimize:
                 break
 
             # do line search
+            print('x =')
+            print(x)
+            print('s =')
+            print(s)
             t = self._do_linesearch( x, s )
-
+            print('t = ')
+            print(t)
             if t == 0.0:
                 print("line search failed")
                 return x
