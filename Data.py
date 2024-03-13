@@ -62,12 +62,12 @@ The MNIST dataset is publicly available at https://yann.lecun.com/exdb/mnist/ an
         with gzip.open(self._files[0]) as fstream:
             fstream.read(16);
             buffer = fstream.read( n*n*m )
-            print(buffer)
+            #print(buffer)
             Y = np.frombuffer(buffer, dtype=np.uint8).astype(np.float32)
             Y = Y.reshape(m, n*n)
             Y = Y / 255.0
-            print('Y')
-            print(Y)
+            #print('Y')
+            #print(Y)
 
         # read the labels
         with gzip.open(self._files[1]) as fstream:

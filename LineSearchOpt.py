@@ -69,10 +69,6 @@ class Optimize:
 
         # evaluate objective function
         fx, dfx = self._objfctn( x, "df" );
-        print('fx = ')
-        print(fx)
-        print('dfx = ')
-        print(dfx)
         # initialize flag
         success = 0;
 
@@ -121,7 +117,8 @@ class Optimize:
         converged = 0
 
         ndf = np.linalg.norm( df )
-
+        print('Line120 linesearch ndf = ')
+        print(ndf)
         tol = self._df_rtol*self._ndf0
 
         if ( ndf <= tol ):
@@ -196,13 +193,13 @@ class Optimize:
                 break
 
             # do line search
-            print('x =')
-            print(x)
-            print('s =')
-            print(s)
+            #print('x =')
+            #print(x)
+            #print('s =')
+            #print(s)
             t = self._do_linesearch( x, s )
-            print('t = ')
-            print(t)
+            #print('t = ')
+            #print(t)
             if t == 0.0:
                 print("line search failed")
                 return x
