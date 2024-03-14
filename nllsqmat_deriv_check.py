@@ -4,7 +4,7 @@ import sys
 sys.path.append("..")
 from LineSearchOpt import *
 
-n = 28 #features 784=28*28 (image size)
+n = 784 #features 784=28*28 (image size)
 m = 30 #examples 60,000
 p = 10 #classes (one for each integer 0-9)
 X = np.random.rand(n, p) #n,p not n,m?
@@ -38,8 +38,9 @@ def eval_objfun( X, Y, C, flag="df" ):
         return f
 
     # evaluate gradient
-    df = df_temp.reshape(n*p)
-
+    #df = df_temp.reshape(n*p)
+    df = np.matmul(Y.transpose(), np.matmul(sigma(np.matmul(Y, X)) - C, np.ones((Y.shape[0], X.shape[1])) - np.square(sigma(np.matmul(Y, X)))))
+    df = df.reshape(-1, order='F')
     if flag == "df":
         return f,df
 

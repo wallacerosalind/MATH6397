@@ -117,8 +117,8 @@ class Optimize:
         converged = 0
 
         ndf = np.linalg.norm( df )
-        print('Line120 linesearch ndf = ')
-        print(ndf)
+        #print('Line120 linesearch ndf = ')
+        #print(ndf)
         tol = self._df_rtol*self._ndf0
 
         if ( ndf <= tol ):

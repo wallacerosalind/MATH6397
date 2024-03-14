@@ -8,7 +8,7 @@ from LineSearchOpt import *
 from Data import *
 
 n = 784 #features 784=28*28 (image size)
-m = 10 #examples 60,000
+m = 20 #examples 60,000
 p = 10 #classes (one for each integer 0-9)
 #X = np.random.rand(n, p)
 #Y = np.random.rand(m, n)
@@ -27,6 +27,12 @@ def eval_objfun( X, Y, C, flag="df" ):
 
     # evaluate gradient
     # populate df_temp, the gradient matrix of f
+        # df = np.matmul(Y.transpose(), np.matmul(np.ones((Y.shape[0],X.shape[1])) - np.square(sigma(np.matmul(Y, X))), sigma(np.matmul(Y, X)) - C ))
+    ones = np.ones(np.matmul(Y, X).shape)
+    tanYX = sigma(np.matmul(Y, X))
+    dtanYX = ones - tanYX ** 2
+    df = Y.transpose() @ (dtanYX * (tanYX - C))
+    #"""
     df_temp = np.zeros((Y.shape[1], C.shape[1]))
     val = 0  # declare and initiate variable
     tanval = 0  # declare and initiate variable to hold sum (sigma/tanh input)
@@ -39,12 +45,13 @@ def eval_objfun( X, Y, C, flag="df" ):
                     #if tanval != 0:   #debug complete: tanval noteq zero
                         #print('tanval = ')
                         #print(tanval)
-                val += Y[k, i] * (1 - np.square(sigma(tanval))) * (sigma(tanval) - C[k, j])
+                val += Y[k, i] * (1 - (sigma(tanval))**2) * (sigma(tanval) - C[k, j])
                 #if val != 0:
                  #   print('val = ')
                   #  print(val)
             df_temp[i, j] = val
-    df = df_temp.reshape(-1, order='F') #df_temp is an nxp matrix. This line converts df_temp to n*p vector and assigns this vector to df
+    #"""
+    df = df.reshape(-1, order='F') #df_temp is an nxp matrix. This line converts df_temp to n*p vector and assigns this vector to df
     if flag == "df":
         return f,df
 
