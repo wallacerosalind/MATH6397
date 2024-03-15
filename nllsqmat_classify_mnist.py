@@ -6,6 +6,7 @@ sys.path.append("..")
 sys.path.append("../data")
 from LineSearchOpt import *
 from Data import *
+#import autograd as ag
 
 n = 784 #features 784=28*28 (image size)
 m = 20 #examples 60,000
@@ -31,8 +32,7 @@ def eval_objfun( X, Y, C, flag="df" ):
     ones = np.ones(np.matmul(Y, X).shape)
     tanYX = sigma(np.matmul(Y, X))
     dtanYX = ones - tanYX ** 2
-    df = Y.transpose() @ (dtanYX * (tanYX - C))
-    #"""
+    """
     df_temp = np.zeros((Y.shape[1], C.shape[1]))
     val = 0  # declare and initiate variable
     tanval = 0  # declare and initiate variable to hold sum (sigma/tanh input)
@@ -50,7 +50,8 @@ def eval_objfun( X, Y, C, flag="df" ):
                  #   print('val = ')
                   #  print(val)
             df_temp[i, j] = val
-    #"""
+    """
+
     df = df.reshape(-1, order='F') #df_temp is an nxp matrix. This line converts df_temp to n*p vector and assigns this vector to df
     if flag == "df":
         return f,df
