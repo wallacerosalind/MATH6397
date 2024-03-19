@@ -9,11 +9,11 @@ from Data import *
 #import autograd as ag
 
 n = 784 #features 784=28*28 (image size)
-m = 20 #examples 60,000
+m = 10000 #examples 60,000
 p = 10 #classes (one for each integer 0-9)
-#X = np.random.rand(n, p)
-#Y = np.random.rand(m, n)
-#C = np.random.rand(m, p)
+X = np.random.rand(n, p)
+Y = np.random.rand(m, n)
+C = np.random.rand(m, p)
 sigma = np.tanh #activation function
 
 # evaluate objective function
@@ -32,6 +32,7 @@ def eval_objfun( X, Y, C, flag="df" ):
     ones = np.ones(np.matmul(Y, X).shape)
     tanYX = sigma(np.matmul(Y, X))
     dtanYX = ones - tanYX ** 2
+    df = np.matmul(Y.transpose(), (tanYX-C)*(ones-tanYX**2))
     """
     df_temp = np.zeros((Y.shape[1], C.shape[1]))
     val = 0  # declare and initiate variable
@@ -65,7 +66,7 @@ opt = Optimize()
 dat = Data()
 fctn = lambda X, flag: eval_objfun( X, Y, C, flag)
 #Y,C,L = dat.read_mnist("test")  #comment out either test or train line
-Y,C,L = dat.read_mnist("train",m)  #m=Y.shape[0] rather than m=10k or 60k for faster testing
+Y,C,L = dat.read_mnist("test",m)  #m=Y.shape[0] rather than m=10k or 60k for faster testing
 #print(Y.shape)
 #print(C.shape)
 Xtrue = np.random.rand(Y.shape[1], C.shape[1])
