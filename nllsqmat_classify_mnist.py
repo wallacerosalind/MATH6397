@@ -6,6 +6,7 @@ sys.path.append("..")
 sys.path.append("../data")
 from LineSearchOpt import *
 from Data import *
+from tanh import *
 #import autograd as ag
 
 n = 784 #features 784=28*28 (image size)
@@ -21,7 +22,10 @@ def eval_objfun( X, Y, C, flag="df" ):
     #ensure that X is in matrix form (to allow matmul within f)
     X = X.reshape(Y.shape[1] , C.shape[1], order = 'F')
     # evaluate objective function
-    f = 0.5*np.square(np.linalg.norm( sigma(np.matmul(Y, X)) - C ))
+    tan,dtan,ddtan=tanh_actnfctn( np.matmul(Y, X), flag="d2f" )
+    r=tan-C
+    f = 0.5 * np.square(np.linalg.norm(r,'fro'))
+    #f = 0.5*np.square(np.linalg.norm( sigma(np.matmul(Y, X)) - C ))
 
     if flag == "f":
         return f
@@ -31,8 +35,8 @@ def eval_objfun( X, Y, C, flag="df" ):
         # df = np.matmul(Y.transpose(), np.matmul(np.ones((Y.shape[0],X.shape[1])) - np.square(sigma(np.matmul(Y, X))), sigma(np.matmul(Y, X)) - C ))
     ones = np.ones(np.matmul(Y, X).shape)
     tanYX = sigma(np.matmul(Y, X))
-    dtanYX = ones - tanYX ** 2
-    df = np.matmul(Y.transpose(), (tanYX-C)*(ones-tanYX**2))
+    dtanYX = ones - (tanYX ** 2)
+    df = Y.transpose()@ np.multiply(r,dtan)
     """
     df_temp = np.zeros((Y.shape[1], C.shape[1]))
     val = 0  # declare and initiate variable
@@ -64,13 +68,12 @@ def eval_objfun( X, Y, C, flag="df" ):
 # initialize classes
 opt = Optimize()
 dat = Data()
-fctn = lambda X, flag: eval_objfun( X, Y, C, flag)
+
 #Ytest,C,L = dat.read_mnist("test")  #comment out either test or train line
-Ytrain_test,Ctrue,L = dat.read_mnist("train",m)  #m=Y.shape[0] rather than m=10k or 60k for faster testing
-#print(Y.shape)
-#print(C.shape)
+Ytrain_test,Ctrue,L = dat.read_mnist("test",m)  #m=Y.shape[0] rather than m=10k or 60k for faster testing
 Xtrue = np.random.rand(Y.shape[1], C.shape[1])
 Xtrue = Xtrue.reshape(Xtrue.shape[0]*Xtrue.shape[1], order = 'F')
+fctn = lambda Xtrue, flag: eval_objfun( Xtrue, Y, C, flag)
 # initial guess
 X = np.zeros(Y.shape[1]*C.shape[1])
 # set parameters
@@ -81,9 +84,6 @@ xgd = opt.run( X, "gdsc" )
 Xopt = xgd.reshape((784,10),order='F')
 Cpred = np.matmul(Ytrain_test,Xopt)
 dat.check_class( Cpred, Ctrue )
-# execture solver (newton)
-#xnt = opt.run( X, "newton" )
-#z = np.linspace( 0, 1, n)
 z = np.linspace( 0, 1, xgd.shape[0]) #.shape[] returns int; .shape returns tuple
 #print(xgd.shape)#debug
 plt.plot( z, xgd, marker="1", linestyle='', markersize=12)
