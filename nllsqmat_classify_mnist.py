@@ -9,7 +9,7 @@ from Data import *
 #import autograd as ag
 
 n = 784 #features 784=28*28 (image size)
-m = 10000 #examples 60,000
+m = 100 #examples 60,000
 p = 10 #classes (one for each integer 0-9)
 X = np.random.rand(n, p)
 Y = np.random.rand(m, n)
@@ -65,19 +65,22 @@ def eval_objfun( X, Y, C, flag="df" ):
 opt = Optimize()
 dat = Data()
 fctn = lambda X, flag: eval_objfun( X, Y, C, flag)
-#Y,C,L = dat.read_mnist("test")  #comment out either test or train line
-Y,C,L = dat.read_mnist("test",m)  #m=Y.shape[0] rather than m=10k or 60k for faster testing
+#Ytest,C,L = dat.read_mnist("test")  #comment out either test or train line
+Ytrain_test,Ctrue,L = dat.read_mnist("train",m)  #m=Y.shape[0] rather than m=10k or 60k for faster testing
 #print(Y.shape)
 #print(C.shape)
 Xtrue = np.random.rand(Y.shape[1], C.shape[1])
+Xtrue = Xtrue.reshape(Xtrue.shape[0]*Xtrue.shape[1], order = 'F')
 # initial guess
 X = np.zeros(Y.shape[1]*C.shape[1])
 # set parameters
 opt.set_objfctn( fctn )
-opt.set_maxiter( 10 ) #3b:run for 1 iter then report accuracy for each training and test datasets. Then set to 100 iters
+opt.set_maxiter( 1 ) #3b:run for 1 iter then report accuracy for each training and test datasets. Then set to 100 iters
 # execture solver (gsc)
 xgd = opt.run( X, "gdsc" )
-
+Xopt = xgd.reshape((784,10),order='F')
+Cpred = np.matmul(Ytrain_test,Xopt)
+dat.check_class( Cpred, Ctrue )
 # execture solver (newton)
 #xnt = opt.run( X, "newton" )
 #z = np.linspace( 0, 1, n)
@@ -85,7 +88,7 @@ z = np.linspace( 0, 1, xgd.shape[0]) #.shape[] returns int; .shape returns tuple
 #print(xgd.shape)#debug
 plt.plot( z, xgd, marker="1", linestyle='', markersize=12)
 #plt.plot( z, xnt, marker="2", linestyle='', markersize=12)
-Xtrue = Xtrue.reshape(Xtrue.shape[0]*Xtrue.shape[1], order = 'F')
+#Xtrue = Xtrue.reshape(Xtrue.shape[0]*Xtrue.shape[1], order = 'F')
 plt.plot( z, Xtrue)
 #plt.legend(['gradient descent', 'newton', r'$x^\star$'], fontsize="20")
 plt.legend(['gradient descent', r'$x^\star$'], fontsize="20")

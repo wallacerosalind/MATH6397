@@ -15,7 +15,7 @@ XT = X.transpose()
 YT = Y.transpose()
 sigma = np.tanh #activation function
 
-
+"""
 df_temp = np.zeros((n, p))
 val = 0 #declare and initiate variable
 tanval = 0 #declare and initiate variable to hold sum (sigma/tanh input)
@@ -27,7 +27,7 @@ for i in range(1,n):
                     tanval +=  Y[k,l] * X[l,j]
             val += Y[k,i] * (1-np.square(sigma(tanval))) * (sigma(tanval) - C[k,j])
         df_temp[i,j] = val
-
+"""
 
 # evaluate objective function
 def eval_objfun( X, Y, C, flag="df" ):
@@ -39,7 +39,11 @@ def eval_objfun( X, Y, C, flag="df" ):
 
     # evaluate gradient
     #df = df_temp.reshape(n*p)
-    df = np.matmul(Y.transpose(), np.matmul(sigma(np.matmul(Y, X)) - C, np.ones((Y.shape[0], X.shape[1])) - np.square(sigma(np.matmul(Y, X)))))
+    #df = np.matmul(Y.transpose(), np.matmul(sigma(np.matmul(Y, X)) - C, np.ones((Y.shape[0], X.shape[1])) - np.square(sigma(np.matmul(Y, X)))))
+    ones = np.ones(np.matmul(Y, X).shape)
+    tanYX = sigma(np.matmul(Y, X))
+    dtanYX = ones - tanYX ** 2
+    df = np.matmul(Y.transpose(), (tanYX - C) * (ones - tanYX ** 2))
     df = df.reshape(-1, order='F')
     if flag == "df":
         return f,df
